@@ -19,6 +19,14 @@
     var globalShortcut = require('electron').globalShortcut;
     var ContextMenu = require('electron-context-menu');
 
+    const gotTheLock = app.requestSingleInstanceLock()
+
+    if (!gotTheLock) {
+        app.quit()
+        return;
+    }
+    
+    /*
     const isAlreadyRunning = app.makeSingleInstance((argv, workingDir) => {
         if (whatsApp.window) {
             if (whatsApp.window.isMinimized()) {
@@ -54,7 +62,7 @@
     if (isAlreadyRunning) {
         app.quit();
     }
-
+*/
     app.setAppUserModelId("it.enrico204.whatsapp-desktop");
     app.setAsDefaultProtocolClient("whatsapp");
 
@@ -889,6 +897,14 @@
     }
 
     app.on('ready', () => {
+            var electronSession = require('electron').session;
+
+        /* Make WhatsApp Web think it is run on the desired browser */
+        electronSession.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+            details.requestHeaders['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36';
+            callback({ cancel: false, requestHeaders: details.requestHeaders });
+        });
+
         whatsApp.init();
         // setting of globalShortcut
         if(config.get("globalshortcut") == true) {
