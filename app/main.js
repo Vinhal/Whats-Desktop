@@ -26,13 +26,14 @@
         return;
     }
     
-    /*
-    const isAlreadyRunning = app.makeSingleInstance((argv, workingDir) => {
+   
+    app.on('second-instance', (event, argv, workingDirectory) => {
+        // Someone tried to run a second instance, we should focus our window.
         if (whatsApp.window) {
-            if (whatsApp.window.isMinimized()) {
-                whatsApp.window.restore();
-            }
-            whatsApp.window.show();
+                if (whatsApp.window.isMinimized()) {
+                    whatsApp.window.restore();
+                }
+                whatsApp.window.show();
         }
 
         var groupLinkOpenRequested = null;
@@ -59,10 +60,7 @@
         }
     });
 
-    if (isAlreadyRunning) {
-        app.quit();
-    }
-*/
+    
     app.setAppUserModelId("it.enrico204.whatsapp-desktop");
     app.setAsDefaultProtocolClient("whatsapp");
 
