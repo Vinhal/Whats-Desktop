@@ -62,6 +62,11 @@
                 console.log("Disconnecting the observer");
                 observer.disconnect();
             }
+
+            var title = document.querySelector('.window-title').innerHTML;
+            if (title && title.includes('Google Chrome 36+')) {
+                window.location.reload();
+            }
         });
 
         var config = {childList: true, subtree: true};

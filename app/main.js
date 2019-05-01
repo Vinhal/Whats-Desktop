@@ -18,6 +18,9 @@
     var notifier = require('node-notifier');
     var globalShortcut = require('electron').globalShortcut;
     var ContextMenu = require('electron-context-menu');
+    var session = require('electron').session;
+
+    const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36'
 
     const isAlreadyRunning = app.makeSingleInstance((argv, workingDir) => {
         if (whatsApp.window) {
@@ -503,9 +506,11 @@
                 window: whatsApp.window
             });
 
-            whatsApp.window.loadURL('https://web.whatsapp.com', {
-                userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36'
-            });
+            var contents = whatsApp.window.webContents
+
+            contents.setUserAgent(userAgent)
+
+            whatsApp.window.loadURL('https://web.whatsapp.com', { userAgent });
 
             whatsApp.window.webContents.on('did-finish-load', function() {
                 if (groupLinkOpenRequested != null) {
@@ -866,6 +871,11 @@
     app.on('ready', () => {
         whatsApp.init();
         // setting of globalShortcut
+        session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+            details.requestHeaders['User-Agent'] = userAgent;
+            callback({ cancel: false, requestHeaders: details.requestHeaders });
+        });
+
         if(config.get("globalshortcut") == true) {
             globalShortcut.register('CmdOrCtrl + Alt + W', function(){
                 if(whatsApp.window.isFocused())
