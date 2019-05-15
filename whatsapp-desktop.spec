@@ -5,7 +5,7 @@
 
 Summary:   WhatsApp Desktop
 Name:      WhatsApp
-Version:   0.5.0
+Version:   0.6.0
 Release:   1
 License:   GPL
 Group:     None
@@ -56,6 +56,9 @@ rm -rf %{buildroot}
 /usr/share/icons/hicolor/64x64/apps/whatsapp.png
 
 %changelog
+* Sun Jan 20 2019  marco.calautti <marco.calautti AT gmail DOT com> 0.6.0-1
+- See debian changelog in repo
+
 * Sat Mar 31 2018  Enrico204 <enrico204@gmail.com> 0.5.0-1
 - See debian changelog in repo
 

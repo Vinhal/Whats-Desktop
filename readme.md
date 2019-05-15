@@ -1,6 +1,13 @@
 # Whats Desktop [![Build Status](https://travis-ci.org/Enrico204/Whatsapp-Desktop.svg?branch=master)](https://travis-ci.org/Enrico204/Whatsapp-Desktop)
 
-WhatsApp desktop client, based on the official WhatsApp web app. Build with [Electron](http://electron.atom.io/).  
+
+**This is a fork** of the WhatsApp desktop client by Enrico204, based on the official WhatsApp web app. Build with [Electron](http://electron.atom.io/).
+
+**This fork makes the client work again with the current iteration of the WhatsApp web app.**
+
+**No prebuilt binaries are released here, due to Facebook DCMA. Feel free to clone and build the source code.**
+
+**This client is made obsolete on Windows and macOS by the official desktop client. This is only relevant for Linux users.**
 
 This is **NOT** an official product. This project does not attempt to reverse engineer the WhatsApp API or attempt to reimplement any part of the WhatsApp client. Any communication between the user and WhatsApp servers is handled by official WhatsApp Web itself; this is just a native wrapper for WhatsApp Web, like a browser.
 

@@ -22,12 +22,21 @@
 
     const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36'
 
-    const isAlreadyRunning = app.makeSingleInstance((argv, workingDir) => {
+    const gotTheLock = app.requestSingleInstanceLock()
+
+    if (!gotTheLock) {
+        app.quit()
+        return;
+    }
+    
+   
+    app.on('second-instance', (event, argv, workingDirectory) => {
+        // Someone tried to run a second instance, we should focus our window.
         if (whatsApp.window) {
-            if (whatsApp.window.isMinimized()) {
-                whatsApp.window.restore();
-            }
-            whatsApp.window.show();
+                if (whatsApp.window.isMinimized()) {
+                    whatsApp.window.restore();
+                }
+                whatsApp.window.show();
         }
 
         var groupLinkOpenRequested = null;
@@ -54,10 +63,7 @@
         }
     });
 
-    if (isAlreadyRunning) {
-        app.quit();
-    }
-
+    
     app.setAppUserModelId("it.enrico204.whatsapp-desktop");
     app.setAsDefaultProtocolClient("whatsapp");
 
@@ -869,6 +875,14 @@
     }
 
     app.on('ready', () => {
+            var electronSession = require('electron').session;
+
+        /* Make WhatsApp Web think it is run on the desired browser */
+        electronSession.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+            details.requestHeaders['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36';
+            callback({ cancel: false, requestHeaders: details.requestHeaders });
+        });
+
         whatsApp.init();
         // setting of globalShortcut
         session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
