@@ -7,7 +7,7 @@
 
 **No prebuilt binaries are released here, due to Facebook DCMA. Feel free to clone and build the source code.**
 
-**This client is made obsolete on Windows and macOS by the official desktop client. This is only relevant for Linux users.**
+**This client is made obsolete on Windows 8+ and macOS by the official desktop client. This is only relevant for Linux and Windows 7 users.**
 
 This is **NOT** an official product. This project does not attempt to reverse engineer the WhatsApp API or attempt to reimplement any part of the WhatsApp client. Any communication between the user and WhatsApp servers is handled by official WhatsApp Web itself; this is just a native wrapper for WhatsApp Web, like a browser.
 
@@ -135,7 +135,7 @@ If you're a developer, you may want to use directly `yarn run dev` (in project r
 
 ### Cross-build for Windows (from Linux/macOS)
 
-Wine needs to be installed. On macOS, it is installable via Homebrew:  
+Wine needs to be installed. On macOS, it is installable via Homebrew:
 
     brew install wine
 
